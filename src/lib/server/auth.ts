@@ -63,6 +63,10 @@ export async function validateSessionToken(token: string) {
 
 export type SessionValidationResult = Awaited<ReturnType<typeof validateSessionToken>>;
 
+export async function createUser(createUserDTO: Omit<table.User, 'id'>) {
+	return await db.insert(table.user).values(createUserDTO).returning({ id: table.user.id });
+}
+
 export async function invalidateSession(sessionId: string) {
 	await db.delete(table.session).where(eq(table.session.id, sessionId));
 }

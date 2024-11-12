@@ -1,6 +1,6 @@
 {
-  "id": "85cf83fb-2262-43f4-a44d-13bc3e33bc42",
-  "prevId": "7f11a4ad-8e80-4be9-86a7-91288ef793e3",
+  "id": "04cd5958-6d8a-4427-8147-073f90e309ae",
+  "prevId": "58a1681f-f6ef-4613-93d2-0861ac3cf424",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,8 +10,15 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
           "notNull": true
         },
         "heading": {
@@ -35,7 +42,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "poll_user_id_user_id_fk": {
+          "name": "poll_user_id_user_id_fk",
+          "tableFrom": "poll",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -51,7 +72,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -87,9 +108,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "username": {
           "name": "username",
@@ -123,18 +145,19 @@
       "columns": {
         "poll_id": {
           "name": "poll_id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
+        "identifier_type": {
+          "name": "identifier_type",
+          "type": "identifier",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "ip_address": {
-          "name": "ip_address",
+        "identifier": {
+          "name": "identifier",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -160,26 +183,22 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "vote_user_id_user_id_fk": {
-          "name": "vote_user_id_user_id_fk",
-          "tableFrom": "vote",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.identifier": {
+      "name": "identifier",
+      "schema": "public",
+      "values": [
+        "ip",
+        "user"
+      ]
+    }
+  },
   "schemas": {},
   "_meta": {
     "columns": {},

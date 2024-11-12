@@ -5,7 +5,7 @@ import { getPoll } from '$lib/server/poll';
 import { castVote } from '$lib/server/vote';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	const poll = await getPoll('23');
+	const poll = await getPoll('8b3fd6dd-4158-4a4a-94e0-26c1cf03f558');
 
 	if (!locals.user) {
 		return { user: null, poll };

@@ -2,6 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
+import { createPoll } from '$lib/server/poll';
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) {
 		return redirect(302, '/login');
@@ -21,10 +22,10 @@ async function imageUrlToBase64(url: string) {
 }
 
 export const actions = {
-	default: async (event) => {
+	default: async ({ request, locals }) => {
 		let formData: FormData;
 		try {
-			formData = await event.request.formData();
+			formData = await request.formData();
 		} catch (err) {
 			console.error('Error parsing create poll formdata: ', err);
 			return;
@@ -58,11 +59,15 @@ export const actions = {
 				}
 			}
 
-			await db.insert(table.poll).values({
-				id: '23',
-				heading: formData.get('heading'),
+			if (!locals.user?.id) {
+				return;
+			}
+
+			await createPoll({
+				userId: locals.user.id,
+				heading: formData.get('heading') as string,
 				img: encodedImg,
-				options
+				options: options as string[]
 			});
 		} catch (err) {
 			console.error('Error compressing image: ', err);
