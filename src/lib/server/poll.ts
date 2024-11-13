@@ -12,7 +12,12 @@ export async function getPoll(id: string) {
 }
 
 export async function getRecentPolls(count: number = 10) {
-	return [];
+	try {
+		const [result] = await db.select().from(table.poll).orderBy(table.poll.id).limit(count);
+		return result;
+	} catch (err) {
+		console.error('Error fetching polls: ', err)
+	}
 }
 
 export async function createPoll(pollDTO: Omit<table.Poll, 'id'>) {

@@ -31,6 +31,7 @@ export const actions = {
 			return;
 		}
 
+		const formImg = formData.get('img');
 		const tinifyHeaders = new Headers();
 		tinifyHeaders.set('Content-Type', 'image/png');
 		tinifyHeaders.set(
@@ -38,19 +39,23 @@ export const actions = {
 			'Basic YXBpOkdEWjRDWHpRV3lrTEpSVnJ4VldqTnAwdDBURzFTR3lR'
 			//Buffer.from('api:GDZ4CXzQWykLJRVrxVWjNp0t0TG1SGyQ')
 		); //process.env.TINY_IMAGE_API_KEY
+		let encodedImg = '';
 
 		try {
-			//should probably do some content aware cropping to fit as well.
-			const res = await fetch('https://api.tinify.com/shrink', {
-				method: 'POST',
-				headers: tinifyHeaders,
-				body: formData.get('img')
-			});
-			const img_url = (await res.json()).output.url;
+			if (formImg) {
+				//should probably do some content aware cropping to fit as well.
+				const res = await fetch('https://api.tinify.com/shrink', {
+					method: 'POST',
+					headers: tinifyHeaders,
+					body: formImg
+				});
+				const img_url = (await res.json()).output.url;
 
-			//process the tinyImg response
-			const encodedImg = await imageUrlToBase64(img_url);
-			//todo : move this to another try-catch block
+				//process the tinyImg response
+				encodedImg = await imageUrlToBase64(img_url);
+				
+			}
+
 			const options = [];
 
 			for (const [key, value] of formData.entries()) {
@@ -62,7 +67,7 @@ export const actions = {
 			if (!locals.user?.id) {
 				return;
 			}
-
+			//todo : move this to another try-catch block
 			await createPoll({
 				userId: locals.user.id,
 				heading: formData.get('heading') as string,

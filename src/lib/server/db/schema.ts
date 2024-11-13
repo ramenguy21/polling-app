@@ -1,10 +1,7 @@
 import {
 	pgTable,
-	serial,
 	text,
-	integer,
 	timestamp,
-	unique,
 	pgEnum,
 	uuid
 } from 'drizzle-orm/pg-core';

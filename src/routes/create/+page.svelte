@@ -32,14 +32,10 @@
 			body: newPollForm
 		});
 	}
-
-	//initate long polling request to the server for each poll.
-
-
 </script>
 
 <div>
-	<h1 class="p-4 text-center text-2xl">Poll creation Page</h1>
+	<h1 class="p-4 text-center text-2xl">Create Poll</h1>
 </div>
 
 <div class="bg-cyan-500 p-4">

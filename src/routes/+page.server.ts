@@ -1,16 +1,13 @@
 import * as auth from '$lib/server/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { getPoll } from '$lib/server/poll';
+import { getRecentPolls } from '$lib/server/poll';
 import { castVote } from '$lib/server/vote';
 
-export const load: PageServerLoad = async ({ locals }) => {
-	const poll = await getPoll('8b3fd6dd-4158-4a4a-94e0-26c1cf03f558');
+export const load: PageServerLoad = async () => {
+	const polls = await getRecentPolls(10);
 
-	if (!locals.user) {
-		return { user: null, poll };
-	}
-	return { user: locals.user, poll };
+	return { polls };
 };
 
 export const actions = {

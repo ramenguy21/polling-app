@@ -67,7 +67,8 @@ const pollProgress = async (pollId: string) => {
 
 // Initialize polling
 onMount(() => {
-	setupPoller(id);
+	if(id)
+		setupPoller(id);
 })
 
 </script>
