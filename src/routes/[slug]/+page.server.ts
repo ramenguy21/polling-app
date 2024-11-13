@@ -1,4 +1,3 @@
-import { poll } from '$lib/server/db/schema.js';
 import { getPoll } from '$lib/server/poll.js';
 import { castVote, getPollVotes } from '$lib/server/vote.js';
 import type { Actions } from '@sveltejs/kit';
@@ -9,7 +8,12 @@ export async function load({ params }) {
 	const poll = await getPoll(pollId);
 	const votes = await getPollVotes(pollId);
 
-	return { poll, votes };
+	const response = await fetch('https://api.ipify.org?format=json');
+	const parsedIp = await response.json();
+	const ip = parsedIp.ip;
+
+
+	return { poll, votes, ip };
 }
 
 export const actions = {

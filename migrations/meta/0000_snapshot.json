@@ -1,5 +1,5 @@
 {
-  "id": "58a1681f-f6ef-4613-93d2-0861ac3cf424",
+  "id": "5664643b-9c9e-4816-996a-7a75d0402c54",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -149,12 +149,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
         "identifier_type": {
           "name": "identifier_type",
           "type": "identifier",
@@ -187,20 +181,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "vote_user_id_user_id_fk": {
-          "name": "vote_user_id_user_id_fk",
-          "tableFrom": "vote",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },

@@ -8,16 +8,14 @@
 
 
 {#if data?.poll}
-<a href="/" class="bg-green-500 p-2 rounded text-white">Home</a>
-<h1>Poll</h1>
-<Poll
+	<Poll
 		id={data?.poll?.id || ''}
 		imgSrc={data?.poll?.img || ''}
 		heading={data?.poll?.heading || 'no heading'}
 		options={data?.poll?.options.map((opt) => {
 			return { text: opt, checked: false };
 		})}
-		ip={""}
+		ip={data.ip}
         votes={data?.votes}
 	/>
     {:else}

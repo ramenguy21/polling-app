@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
 	import '../app.css';
 	const { children, data } = $props();
 	//const data = $props<LayoutServerData>();
 	let isOpen = $state(false);
-
-	onMount(() => console.log("Layout data",data))
 </script>
 
 
@@ -57,6 +54,6 @@
 </main>
 
 <footer>
-	<p class="bg-blue-700 text-white  py-2 text-center">Created for the ConnectHear dev assignment</p>
+	<p class="bg-blue-700 text-white  py-2 text-center">Created for the ConnectHear dev assignment <br/> by Muhammad Hamza Asad</p>
 </footer>
 </div>

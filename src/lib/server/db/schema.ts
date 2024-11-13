@@ -46,7 +46,7 @@ export const vote = pgTable(
 	{
 		pollId: uuid('poll_id')
 			.notNull()
-			.references(() => poll.id),
+			.references(() => poll.id, {onDelete : 'cascade'}),
 		//note, userId can be an ip address, which if exists <--- scrapping this
 		//can be used to register a vote for that client, disallowing them from voting further
 		//userId = 0 is a special directive used to register an anon user.
